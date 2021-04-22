@@ -14,11 +14,11 @@ build/%.gb: build/%.o
 	$(RGBLINK) $(LDFLAGS) -o $@ $^
 	$(RGBFIX) $(FIXFLAGS) -c $@
 
-build/%.o: %.asm
+build/%.o: src/%.asm
 	mkdir -p $(dir $@)
 	$(RGBASM) $(ASFLAGS) -o $@ $<
 
-all: $(addprefix build/, $(addprefix src/, $(addsuffix .gb, $(basename $(SOURCES)))))
+all: $(addprefix build/, $(addsuffix .gb, $(basename $(SOURCES))))
 
 .PHONY: clean
 clean:
