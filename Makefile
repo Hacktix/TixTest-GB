@@ -6,7 +6,7 @@ SOURCES = $(shell cd ./src; find . -name "*.asm")
 EXT=*.o *.gb
 
 NAME = TIXTEST-GB
-ASFLAGS = -h
+ASFLAGS = -h -i inc
 LDFLAGS = -t -w -x
 FIXFLAGS = -v -p0 -t $(NAME)
 
