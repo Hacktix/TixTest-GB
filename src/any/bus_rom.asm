@@ -2,8 +2,6 @@ INCLUDE "hardware.inc"
 INCLUDE "font.inc"
 INCLUDE "common.inc"
 
-BCPS_LABEL_ADDR_BASE EQU $9821
-
 SECTION "Header", ROM0[0]
     ds $38 - @
 
@@ -191,6 +189,7 @@ TestData:
     db HIGH(_VRAM)
     db HIGH(_SRAM)
     db HIGH(_RAM)
+    db $E0
     db HIGH(_OAMRAM)
     db HIGH(_IO)
     db $00
@@ -213,14 +212,16 @@ resultStringMap:
     dw strVRAM, $98A1
     dw strSRAM, $98E1
     dw strWRAM, $9921
-    dw strOAM,  $9961
-    dw strMMIO, $99A1
+    dw strECHO, $9961
+    dw strOAM,  $99A1
+    dw strMMIO, $99E1
     dw $0000,   $0000
 
 strROM:  db $1F, " ROM:  ", 0
 strVRAM: db $1F, " VRAM: ", 0
 strSRAM: db $1F, " SRAM: ", 0
 strWRAM: db $1F, " WRAM: ", 0
+strECHO: db $1F, " ECHO: ", 0
 strOAM:  db $1F, " OAM:  ", 0
 strMMIO: db $1F, " MMIO: ", 0
 
