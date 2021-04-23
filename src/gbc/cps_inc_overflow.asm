@@ -1,3 +1,7 @@
+; ===== Makefile Headers =====
+; MBC 0x00
+; RAM 0x00
+
 INCLUDE "hardware.inc"
 INCLUDE "font.inc"
 INCLUDE "common.inc"
