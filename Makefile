@@ -10,13 +10,24 @@ ASFLAGS = -h -i inc
 LDFLAGS = -t -w -x
 FIXFLAGS = -v -p0 -t $(NAME)
 
-build/%.gb: build/%.o
-	$(RGBLINK) $(LDFLAGS) -o $@ $^
-	$(RGBFIX) $(FIXFLAGS) -c $@
+build/./any/%.gb: build/any/%.o
+	$(info Generating $(notdir $@)... (GBC-Compatible))
+	@$(RGBLINK) $(LDFLAGS) -o $@ $^
+	@$(RGBFIX) $(FIXFLAGS) -c $@
+
+build/./gbc/%.gb: build/gbc/%.o
+	$(info Generating $(notdir $@c)... (GBC-Only))
+	@$(RGBLINK) $(LDFLAGS) -o $@c $^
+	@$(RGBFIX) $(FIXFLAGS) -C $@c
+	
+build/./gb/%.gb: build/gb/%.o
+	$(info Generating $(notdir $@)... (DMG-Only))
+	@$(RGBLINK) $(LDFLAGS) -o $@ $^
+	@$(RGBFIX) $(FIXFLAGS) $@
 
 build/%.o: src/%.asm
-	mkdir -p $(dir $@)
-	$(RGBASM) $(ASFLAGS) -o $@ $<
+	@mkdir -p $(dir $@)
+	@$(RGBASM) $(ASFLAGS) -o $@ $<
 
 all: $(addprefix build/, $(addsuffix .gb, $(basename $(SOURCES))))
 
