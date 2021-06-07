@@ -149,7 +149,7 @@ TileData::
 ;             Bit 7 Set = End of Tilemap
 ;  * [1 byte] Tile ID to be inserted X times
 ;----------------------------------------------------------------------------
-SECTION "Tile Data", ROM0
+SECTION "Tilemap Data", ROM0
 TilemapBad::
     db $40, $00
     db $08, $00, $04, $01, $14, $00
