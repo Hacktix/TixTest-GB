@@ -342,7 +342,7 @@ HandleWater1::
 
     ;====================================================
     ; Update PPU Registers
-    ld a, %11100101
+    ld a, %11100001
     ldh [rBGP], a
     ldh a, [hWater1SCX]
     ldh [rSCX], a
