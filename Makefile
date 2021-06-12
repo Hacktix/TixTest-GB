@@ -1,14 +1,21 @@
 RGBASM = rgbasm
 RGBLINK = rgblink
 RGBFIX = rgbfix
+RGBGFX = rgbgfx
 
 SOURCES = $(shell cd ./src; find . -name "*.asm")
+IMAGES = $(shell cd ./src; find . -name "*.png")
 EXT=*.o *.gb
 
 NAME = TIXTEST-GB
 ASFLAGS = -h -i inc
 LDFLAGS = -t -w -x
 FIXFLAGS = -v -p0 -t $(NAME)
+GFXFLAGS = -T -u -v -f
+
+src/%.2bpp: src/%.png
+	$(info Generating GFX - $@)
+	@$(RGBGFX) $(GFXFLAGS) -o $@ $<
 
 build/./any/%.gb: build/any/%.o
 	$(info Generating $(notdir $@)... (GBC-Compatible))
@@ -44,7 +51,7 @@ build/%.o: src/%.asm
 	@mkdir -p $(dir $@)
 	@$(RGBASM) $(ASFLAGS) -o $@ $<
 
-all: $(addprefix build/, $(addsuffix .gb, $(basename $(SOURCES))))
+all: $(addprefix src/, $(addsuffix .2bpp, $(basename $(IMAGES)))) $(addprefix build/, $(addsuffix .gb, $(basename $(SOURCES))))
 
 .PHONY: clean
 clean:
