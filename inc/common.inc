@@ -14,6 +14,22 @@ Strcpy::
 
 ;----------------------------------------------------------------------------
 ; Input:
+;  BC - Amount of bytes to copy
+;  DE - Pointer to Source
+;  HL - Pointer to Destination
+;----------------------------------------------------------------------------
+Memcpy::
+    ld a, [de]
+    inc de
+    ld [hli], a
+    dec bc
+    ld a, b
+    or c
+    jr nz, Memcpy
+    ret
+
+;----------------------------------------------------------------------------
+; Input:
 ;  HL - Pointer to Palette (8 consecutive bytes)
 ;  C  - $69 for BCPD, $6B for OCPD
 ;----------------------------------------------------------------------------
