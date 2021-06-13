@@ -6,6 +6,9 @@ INCLUDE "hardware.inc"
 INCLUDE "common.inc"
 INCLUDE "oamdma.inc"
 
+INCLUDE "hUGEDriver.asm"
+INCLUDE "src/gb/demos/fairylake/audio/fairytunes.masm"
+
 CD_CLOUDSCROLL  EQU 7
 CD_HEATWAVE     EQU 15
 CD_WATER1       EQU 15
@@ -51,6 +54,17 @@ Main::
     jr c, Main
     xor a
     ldh [rLCDC], a
+
+    ;====================================================
+    ; Initialize Music
+    ld a, $80
+    ld [rAUDENA], a
+    ld a, $FF
+    ld [rAUDTERM], a
+    ld a, $77
+    ld [rAUDVOL], a
+    ld hl, fairytunes
+    call hUGE_init
 
     ;====================================================
     ; Initialize important Variables
@@ -517,6 +531,10 @@ HandleVBlank::
     ; Run OAM DMA
     ld a, HIGH(wShadowOAM)
     call hOAMDMA
+
+    ;====================================================
+    ; Update Audio
+    call _hUGE_dosound
 
     reti
 
