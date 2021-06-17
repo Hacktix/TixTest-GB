@@ -28,6 +28,37 @@ Memcpy::
     jr nz, Memcpy
     ret
 
+;------------------------------------------------------------------------
+; Input:
+;  A - Value to be converted
+;
+; Output:
+;  DE - ASCII-encoded hex characters
+;------------------------------------------------------------------------
+ConvertToASCII::
+    push af
+    call ConvertNibbleToASCII
+    ld e, a
+    pop af
+    swap a
+    call ConvertNibbleToASCII
+    ld d, a
+    ret
+
+;------------------------------------------------------------------------
+; Input:
+;  A - Value to be converted
+;------------------------------------------------------------------------
+ConvertNibbleToASCII::
+    and $0F
+    cp 10
+    jr nc, .letterCharacter
+    add "0"
+    ret
+.letterCharacter
+    add ("A"-10)
+    ret
+
 ;----------------------------------------------------------------------------
 ; Input:
 ;  HL - Pointer to Palette (8 consecutive bytes)
